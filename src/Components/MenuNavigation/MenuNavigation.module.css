@@ -16,6 +16,31 @@
   align-items: center;
 }
 
+.cartModal {
+  max-height: 535px;
+  overflow: hidden;
+}
+
+.modalHeader {
+  background-color: var(--clr--light);
+}
+
+.cartTitle {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  color: var(--clr--green);
+}
+
+.cartTitle span {
+  font-size: 0.7rem;
+}
+
+.orderHeading {
+  font-size: 1.5rem;
+  color: var(--clr--green);
+}
+
 .col2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

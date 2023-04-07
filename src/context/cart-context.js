@@ -133,7 +133,6 @@ function CartProvider({ children }) {
     }
 
     setAllCartItems(currentCart);
-    console.log(productCountTracker);
   }
 
   // Provider value state

@@ -16,24 +16,15 @@ export function SinglePrices({ price }) {
 
 function WeedPrices() {
   const cartUtils = new CartUtils();
-  const {
-    addOneToCart,
-    items,
-    saveCartToSessionStorage,
-    displayCart,
-    currentCart,
-    getCartTotal,
-  } = useContext(CartContext);
   const [flowerClick, setFlowerClick] = useState(0);
+
+  const { addOneToCart, items, saveCartToSessionStorage } =
+    useContext(CartContext);
 
   useEffect(() => {
     // Send Cart to session storage function
     saveCartToSessionStorage(items);
   }, [flowerClick, setFlowerClick]);
-
-  useEffect(() => {
-    console.log(currentCart, " Total: ", getCartTotal());
-  }, [saveCartToSessionStorage, currentCart]);
 
   const cartItemsHandler = (evt) => {
     evt.preventDefault();

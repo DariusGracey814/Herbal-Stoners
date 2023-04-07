@@ -1,9 +1,11 @@
 import React, { useState, useContext } from "react";
 import { CartContext } from "../../context/cart-context";
+import CartProvider from "../../context/cart-context";
 
 import { Link } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import Container from "../UI/Container/Container";
+import CartItems from "../CartComponent/CartItems";
 
 import classes from "./MenuNavigation.module.css";
 
@@ -11,7 +13,7 @@ function MenuNavigation() {
   const [menuActive, setMenuActive] = useState(false);
   const [show, setShow] = useState(false);
 
-  const { itemCounter } = useContext(CartContext);
+  const { itemCounter, currentCart } = useContext(CartContext);
 
   const toggleMenuHandler = () => {
     setMenuActive((prevState) => !prevState);
@@ -87,15 +89,18 @@ function MenuNavigation() {
         </div>
 
         {/* Cart Modal */}
-        <Modal show={show} onHide={handleClose}>
+        <Modal className={classes.cartModal} show={show} onHide={handleClose}>
           {/* Modal Header */}
-          <Modal.Header closeButton>
-            <Modal.Title>Shopping Cart</Modal.Title>
+          <Modal.Header className={classes.modalHeader} closeButton>
+            <Modal.Title className={classes.cartTitle}>
+              Shopping Cart <span>Subtotal: $10.99</span>
+            </Modal.Title>
           </Modal.Header>
 
           {/* Modal Body */}
           <Modal.Body>
-            <h1>This is the modal body</h1>
+            <h1 className={classes.orderHeading}>Herbal Stoners Order</h1>
+            <CartItems currentCart={currentCart} />
           </Modal.Body>
         </Modal>
       </Container>

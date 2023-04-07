@@ -1,0 +1,17 @@
+.cartContainer {
+  max-height: 535px;
+  padding: 0.7em 0 11em;
+  overflow-y: scroll;
+}
+
+.card {
+  margin-bottom: 1em;
+}
+
+.cartBtn {
+  border: none;
+  background: none;
+  font-size: 0.8rem;
+  color: var(--clr--green);
+  cursor: pointer;
+}

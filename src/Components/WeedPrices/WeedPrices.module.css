@@ -15,6 +15,11 @@
 }
 
 .prices-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     position: relative;
     width: 70px;
     height: 60px;
@@ -26,6 +31,7 @@
     -moz-box-shadow: 0 2px 4px 0 rgba(51, 51, 51, 0.2);
     transition: all 0.3s ease;
     cursor: pointer;
+    z-index: 5;
 }
 
 
@@ -63,6 +69,7 @@
 .price {
     margin: 0;
     color: var(--clr--blue);
+    z-index: -10;
 }
 
 .weight2,

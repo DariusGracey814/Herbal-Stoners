@@ -70,7 +70,6 @@ function CartProvider({ children }) {
       } else {
         // Add new product to cart
         setCartProducts((prevProducts) => [...prevProducts, selectedItem]);
-        setProductCountTracker((prevCount) => prevCount + 1);
       }
     }
   }
@@ -131,9 +130,25 @@ function CartProvider({ children }) {
         }
       });
     }
-
     setAllCartItems(currentCart);
+    setCart(currentCart);
+    setCartCounter(productCountTracker);
   }
+
+  function setCart(user_cart) {
+    // Save CurrentCart to session
+    const userCart = { cart: user_cart };
+    sessionStorage.setItem("userCart", JSON.stringify(userCart));
+  }
+
+  function setCartCounter(counter) {
+    sessionStorage.setItem("CartCounter", counter);
+    setProductCountTracker(+sessionStorage.getItem("CartCounter"));
+  }
+
+  // function getCartCounter() {
+
+  // }
 
   // Provider value state
   const itemValues = {

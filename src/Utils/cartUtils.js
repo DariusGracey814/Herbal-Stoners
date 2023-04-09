@@ -20,9 +20,14 @@ class CartUtils {
     const orderWeight = evt.target.childNodes[0].innerText;
     const orderPrice = evt.target.childNodes[1].innerText.slice(1);
 
+    const img =
+      evt.target.parentNode.parentNode.parentNode.childNodes[0].childNodes[0]
+        .src;
+
     // Customer chosen order
     const order = {
       id: +id,
+      img: img,
       breeder: orderBreeder,
       name: orderName,
       thcLevel: orderThcLevel,

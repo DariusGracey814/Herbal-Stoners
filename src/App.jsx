@@ -1,11 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useContext,
-  Suspense,
-  lazy,
-} from "react";
+import React, { useState, useEffect, useRef, Suspense, lazy } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -31,6 +24,9 @@ const Menu = lazy(() => import("./Pages/Menu"));
 const Flower = lazy(() => import("./Pages/Flower"));
 const Extracts = lazy(() => import("./Pages/Extracts"));
 const Edibles = lazy(() => import("./Pages/Edibles"));
+const Checkout = lazy(() =>
+  import("./Components/CartComponent/Checkout/Checkout")
+);
 
 function App() {
   const [navActive, setNavActive] = useState(true);
@@ -117,6 +113,16 @@ function App() {
                   element={
                     <CartProvider>
                       <Edibles />
+                    </CartProvider>
+                  }
+                />
+
+                <Route
+                  exact
+                  path="/herbal-stoners/checkout"
+                  element={
+                    <CartProvider>
+                      <Checkout />
                     </CartProvider>
                   }
                 />

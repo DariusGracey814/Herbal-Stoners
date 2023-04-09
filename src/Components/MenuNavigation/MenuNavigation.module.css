@@ -36,9 +36,32 @@
   font-size: 0.7rem;
 }
 
+#price-total {
+  font-size: 0.9rem;
+}
+
 .orderHeading {
-  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.3rem;
   color: var(--clr--green);
+}
+
+.checkout-btn {
+  font-size: 0.9rem;
+  text-decoration: none;
+  padding: 0.5em 1.4em;
+  color: #ffffff;
+  border-radius: 5px;
+  background-color: var(--clr--green);
+  cursor: pointer;
+  margin-bottom: 0.5em;
+  transition: all 0.3s ease;
+}
+
+.checkout-btn:hover {
+  background-color: #0c351f;
+  color: #ffffff;
 }
 
 .col2 {

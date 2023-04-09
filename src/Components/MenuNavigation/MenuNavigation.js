@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { CartContext } from "../../context/cart-context";
-import CartProvider from "../../context/cart-context";
 
 import { Link } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
@@ -13,7 +12,7 @@ function MenuNavigation() {
   const [menuActive, setMenuActive] = useState(false);
   const [show, setShow] = useState(false);
 
-  const { itemCounter, currentCart } = useContext(CartContext);
+  const { currentCart, getCartTotal, itemCounter } = useContext(CartContext);
 
   const toggleMenuHandler = () => {
     setMenuActive((prevState) => !prevState);
@@ -93,13 +92,25 @@ function MenuNavigation() {
           {/* Modal Header */}
           <Modal.Header className={classes.modalHeader} closeButton>
             <Modal.Title className={classes.cartTitle}>
-              Shopping Cart <span>Subtotal: $10.99</span>
+              Shopping Cart{" "}
+              <span>
+                <span>Subtotal: </span>
+                <span id={classes["price-total"]}>${getCartTotal()}</span>
+              </span>
             </Modal.Title>
           </Modal.Header>
 
           {/* Modal Body */}
           <Modal.Body>
-            <h1 className={classes.orderHeading}>Herbal Stoners Order</h1>
+            <h1 className={classes.orderHeading}>
+              Herbal Stoners Order{" "}
+              <Link
+                className={classes["checkout-btn"]}
+                to="/herbal-stoners/checkout"
+              >
+                Proceed to Checkout
+              </Link>
+            </h1>
             <CartItems currentCart={currentCart} />
           </Modal.Body>
         </Modal>

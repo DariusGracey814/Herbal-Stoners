@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CartContext } from "../../context/cart-context";
 import { Card } from "react-bootstrap";
 
 import classes from "./cartItem.module.css";
@@ -14,7 +15,38 @@ function CartItem({
   id,
   price,
 }) {
+  const { deleteFromCart } = useContext(CartContext);
+
   const cartTitle = `${title} | ${breeder}`;
+
+  const deleteHandler = (evt) => {
+    const itemName =
+      evt.target.parentNode.parentNode.parentNode.childNodes[0].innerText.split(
+        " |"
+      )[0];
+
+    const breeder =
+      evt.target.parentNode.parentNode.parentNode.childNodes[1].innerText;
+
+    const weight =
+      evt.target.parentNode.parentNode.parentNode.childNodes[3].childNodes[0]
+        .innerText;
+
+    const price =
+      evt.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].childNodes[4].innerText.replace(
+        "$",
+        ""
+      );
+
+    const selectedItem = {
+      name: itemName,
+      breeder: breeder,
+      weight: weight,
+      price: price,
+    };
+
+    deleteFromCart(selectedItem);
+  };
 
   return (
     <Card id={id} className={classes.card}>
@@ -41,6 +73,7 @@ function CartItem({
                   className={classes["cart-update-btn"]}
                   type="button"
                   aria-label="remove 1 item"
+                  onClick={deleteHandler}
                 >
                   -
                 </button>
@@ -56,14 +89,16 @@ function CartItem({
                 </button>
               </div>
             </div>
+
+            <div className={classes["price-wrapper"]}>
+              {" "}
+              <span>${price}</span>
+            </div>
           </div>
         </div>
         <button className={classes.cartBtn} type="button">
           <i className="fa-solid fa-trash"></i>
         </button>
-        <div className={classes["card-price"]}>
-          <span>${price}</span>
-        </div>
       </Card.Body>
     </Card>
   );

@@ -46,6 +46,7 @@
 }
 
 .cart-text--wrapper {
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }
@@ -68,8 +69,6 @@
   cursor: pointer;
 }
 
-.card-price {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+.price-wrapper {
+  padding-top: 0.5em;
 }

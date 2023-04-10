@@ -106,11 +106,26 @@ function CartProvider({ children }) {
   }
 
   // Delete From Cart
-  function deleteFromCart(id) {
-    // find Item
-    setCartProducts((cartProducts) =>
-      cartProducts.filter((product) => product.id !== id)
+  function deleteFromCart(selectedItem) {
+    const matchProduct = cartProducts.findIndex(
+      (product) =>
+        product.name === selectedItem.name &&
+        product.breeder === selectedItem.breeder &&
+        product.weight === selectedItem.weight
     );
+
+    console.log(matchProduct);
+
+    if (matchProduct != -1) {
+      // Filter array
+      const existingItem = {
+        ...cartProducts[matchProduct],
+        price: (cartProducts[matchProduct].quantity - 1) * selectedItem.price,
+        quantity: cartProducts[matchProduct].quantity - 1,
+      };
+    }
+
+    // decrease quantity
   }
 
   // Get Total Cost of the cart

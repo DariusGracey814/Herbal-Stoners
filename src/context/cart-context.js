@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const CartContext = createContext({
   items: [],
@@ -12,14 +12,17 @@ export const CartContext = createContext({
   saveCartToSessionStorage: () => {},
 });
 
-// Global cart state
-var currentCart = [];
-
 function CartProvider({ children }) {
   // Initial Cart Products state
-  const [cartProducts, setCartProducts] = useState([]);
-  const [allCartItems, setAllCartItems] = useState([]);
-  const [productCountTracker, setProductCountTracker] = useState(0);
+  const [cartProducts, setCartProducts] = useState(
+    JSON.parse(sessionStorage.getItem("userCart")).cart
+  );
+  const [productCountTracker, setProductCountTracker] = useState(
+    +sessionStorage.getItem("CartCounter")
+  );
+
+  // Global cart state
+  var currentCart = cartProducts;
 
   // Cart: {id: 1, breeder?: "", name: "", weight: "", price: "", thcInfo: "", quantity: 2}
   // Get Product Quantity
@@ -39,17 +42,20 @@ function CartProvider({ children }) {
   function addOneToCart(selectedItem) {
     // Get existing item quantity by item - id
     const quantity = getProductQuantity(selectedItem.id);
-
+    setCartCounter(productCountTracker);
+    // get session counter
     if (quantity === 0) {
       // Add new product to cart
+      currentCart.push(selectedItem);
+      sessionStorage.setItem("userCart", JSON.stringify({ cart: currentCart }));
       setProductCountTracker((prevCount) => prevCount + 1);
-      setCartProducts([selectedItem]);
     } else {
       // Find index of existing product
       const productIndex = cartProducts.findIndex(
         (product) =>
           product.id === selectedItem.id &&
-          product.weight === selectedItem.weight
+          product.weight === selectedItem.weight &&
+          product.name === selectedItem.name
       );
 
       if (productIndex !== -1) {
@@ -64,12 +70,16 @@ function CartProvider({ children }) {
 
         // Replace existing cart item with updated cart item
         cartProducts[productIndex] = { ...updatedItem };
+        sessionStorage.setItem(
+          "userCart",
+          JSON.stringify({ cart: cartProducts })
+        );
         setProductCountTracker((prevCount) => prevCount + 1);
-
         console.log("Quantity and price updated");
       } else {
         // Add new product to cart
-        setCartProducts((prevProducts) => [...prevProducts, selectedItem]);
+        setCartProducts((prevItem) => [...cartProducts, selectedItem]);
+        setProductCountTracker((prevCount) => prevCount + 1);
       }
     }
   }
@@ -105,7 +115,7 @@ function CartProvider({ children }) {
 
   // Get Total Cost of the cart
   function getCartTotal() {
-    const cartTotal = allCartItems.reduce((acc, val) => acc + val.price, 0);
+    const cartTotal = cartProducts.reduce((acc, val) => acc + val.price, 0);
     return cartTotal;
   }
 
@@ -130,9 +140,7 @@ function CartProvider({ children }) {
         }
       });
     }
-    setAllCartItems(currentCart);
     setCart(currentCart);
-    setCartCounter(productCountTracker);
   }
 
   function setCart(user_cart) {
@@ -142,19 +150,13 @@ function CartProvider({ children }) {
   }
 
   function setCartCounter(counter) {
-    sessionStorage.setItem("CartCounter", counter);
-    setProductCountTracker(+sessionStorage.getItem("CartCounter"));
+    sessionStorage.setItem("CartCounter", counter + 1);
   }
-
-  // function getCartCounter() {
-
-  // }
 
   // Provider value state
   const itemValues = {
     items: cartProducts,
     itemCounter: productCountTracker,
-    currentCart: allCartItems,
     getProductQuantity,
     addOneToCart,
     removeOneFromCart,

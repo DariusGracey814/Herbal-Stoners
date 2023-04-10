@@ -2,6 +2,7 @@ import React from "react";
 import { Card } from "react-bootstrap";
 
 import classes from "./cartItem.module.css";
+import img from "../../Assets/Extracts/extract6.jpg";
 
 function CartItem({
   title,
@@ -19,7 +20,12 @@ function CartItem({
     <Card id={id} className={classes.card}>
       <Card.Body>
         <div className={classes["wrapper-img"]}>
-          <img src={imageSrc} alt="product image" width="75px" height="75px" />
+          <img
+            src={`${imageSrc ? imageSrc : img}`}
+            alt="product image"
+            width="75px"
+            height="75px"
+          />
           <div>
             <Card.Title className={classes["card-title"]}>
               {cartTitle}

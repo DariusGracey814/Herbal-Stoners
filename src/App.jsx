@@ -43,6 +43,19 @@ function App() {
   useEffect(() => {
     // Run spinner for 1.5sec before loading page
     setTimeout(pageLoad, 1000);
+
+    // Check if CartCounter and userCart session exists
+    const getCounter = sessionStorage.getItem("CartCounter");
+    const getCart = sessionStorage.getItem("userCart");
+
+    if (getCart === null && getCounter === null) {
+      // Set New session
+      sessionStorage.setItem("CartCounter", 0);
+      sessionStorage.setItem("userCart", JSON.stringify({ cart: [] }));
+    } else {
+      // use previous session
+      return;
+    }
   }, []);
 
   return (

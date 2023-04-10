@@ -39,8 +39,6 @@ function ExtractCard() {
     extracts();
   }, []);
 
-  console.log(extractInfo);
-
   // Pagination
   const postPerPage = 10;
   const pagesVisited = pageNumber * postPerPage;
@@ -92,16 +90,14 @@ function ExtractCard() {
         <div className={classes["card-wrapper"]} key={extract.id}>
           <div id={extract.id} className={classes.col1}>
             {/* Image */}
-            <Suspense fallback={<LoadingSpinner3 />}>
-              <LazyLoadImage
-                className={classes["extract-img"]}
-                src={displayImage(extract, data, randNum6, randNum4)}
-                alt={`${extract.name}`}
-                width="110px"
-                height="90px"
-                effect="blur"
-              ></LazyLoadImage>
-            </Suspense>
+            <LazyLoadImage
+              className={classes["extract-img"]}
+              src={displayImage(extract, data, randNum6, randNum4)}
+              alt={`${extract.name}`}
+              width="110px"
+              height="90px"
+              effect="blur"
+            ></LazyLoadImage>
 
             {/* information */}
             <div className={classes.info}>

@@ -4,9 +4,30 @@ import { CartContext } from "../../context/cart-context";
 
 import classes from "./WeedPrices.module.css";
 
+const cartUtils = new CartUtils();
+
 export function SinglePrices({ price }) {
+  const [flowerClick, setFlowerClick] = useState(0);
+
+  const { addOneToCart, items, saveCartToSessionStorage } =
+    useContext(CartContext);
+
+  useEffect(() => {
+    // Send Cart to session storage function
+    saveCartToSessionStorage(items);
+  }, [flowerClick, setFlowerClick]);
+
+  const cartItemHandler = (evt) => {
+    evt.preventDefault();
+
+    const selectedItem = cartUtils.getSingleItems(evt);
+    addOneToCart(selectedItem);
+
+    setFlowerClick((prev) => prev + 1);
+  };
+
   return (
-    <button className={`${classes["extract-btn"]}`}>
+    <button className={`${classes["extract-btn"]}`} onClick={cartItemHandler}>
       <p className={classes.weight2}>1g - </p>
       <p className={classes.price2}>${price}</p>
       <i className={`fa-solid fa-circle-plus ${classes["price-icon"]}`}></i>
@@ -15,7 +36,6 @@ export function SinglePrices({ price }) {
 }
 
 function WeedPrices() {
-  const cartUtils = new CartUtils();
   const [flowerClick, setFlowerClick] = useState(0);
 
   const { addOneToCart, items, saveCartToSessionStorage } =

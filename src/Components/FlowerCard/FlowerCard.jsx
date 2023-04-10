@@ -1,15 +1,13 @@
-import React, { useState, useEffect, Suspense, lazy } from "react";
-import CartProvider from "../../context/cart-context";
+import React, { useState, lazy } from "react";
+
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import uuid from "react-uuid";
 
 import strainData from "../../Utils/strains";
-import { LoadingSpinner3 } from "../LoadingSpinner/LoadingSpinner";
 import ReactPaginate from "react-paginate";
 import classes from "./FlowerCard.module.css";
 
-const WeedPrices = lazy(() => import("../../Components/WeedPrices/WeedPrices"));
+const WeedPrices = lazy(() => import("../WeedPrices/WeedPrices"));
 
 function FlowerCard() {
   const [weedInfo, setWeedInfo] = useState(strainData);
@@ -31,15 +29,13 @@ function FlowerCard() {
         <div className={classes["card-wrapper"]} key={strain.id}>
           <div id={strain.id} className={classes.col1}>
             {/* Image */}
-            <Suspense fallback={<LoadingSpinner3 />}>
-              <LazyLoadImage
-                className={classes["flower-img"]}
-                src={strain.image}
-                alt={`${strain.name} weed strain`}
-                width="120px"
-                height="100px"
-              ></LazyLoadImage>
-            </Suspense>
+            <LazyLoadImage
+              className={classes["flower-img"]}
+              src={strain.image}
+              alt={`${strain.name} weed strain`}
+              width="120px"
+              height="100px"
+            ></LazyLoadImage>
 
             {/* information */}
             <div className={classes.info}>

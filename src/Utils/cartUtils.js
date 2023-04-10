@@ -38,6 +38,40 @@ class CartUtils {
 
     return order;
   }
+
+  // Retrieve Single Price items (edibles / Extracts / Vaporizers)
+  getSingleItems(evt) {
+    const target = evt.currentTarget;
+
+    const id = target.parentNode.childNodes[0].id;
+    const weight =
+      target.parentNode.childNodes[1].childNodes[0].innerText.replace(" -", "");
+    const price =
+      target.parentNode.childNodes[1].childNodes[1].innerText.replace("$", "");
+
+    const breeder =
+      target.parentNode.childNodes[0].childNodes[1].childNodes[0].innerText;
+    const name =
+      target.parentNode.childNodes[0].childNodes[1].childNodes[1].innerText;
+    let thcLevel =
+      target.parentNode.childNodes[0].childNodes[1].childNodes[2].innerText
+        .split("T")
+        .join(" T")
+        .split("CBD")
+        .join(" CDB");
+
+    const item = {
+      id: +id,
+      weight: weight,
+      price: +price,
+      breeder: breeder,
+      name: name,
+      thcLevel: thcLevel,
+      quantity: 1,
+    };
+
+    return item;
+  }
 }
 
 export default CartUtils;

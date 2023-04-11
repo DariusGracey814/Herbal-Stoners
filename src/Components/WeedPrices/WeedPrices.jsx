@@ -7,23 +7,13 @@ import classes from "./WeedPrices.module.css";
 const cartUtils = new CartUtils();
 
 export function SinglePrices({ price }) {
-  const [flowerClick, setFlowerClick] = useState(0);
-
-  const { addOneToCart, items, saveCartToSessionStorage } =
-    useContext(CartContext);
-
-  useEffect(() => {
-    // Send Cart to session storage function
-    saveCartToSessionStorage(items);
-  }, [flowerClick, setFlowerClick]);
+  const { addToCart } = useContext(CartContext);
 
   const cartItemHandler = (evt) => {
     evt.preventDefault();
 
     const selectedItem = cartUtils.getSingleItems(evt);
-    addOneToCart(selectedItem);
-
-    setFlowerClick((prev) => prev + 1);
+    addToCart(selectedItem);
   };
 
   return (
@@ -38,7 +28,7 @@ export function SinglePrices({ price }) {
 function WeedPrices() {
   const [flowerClick, setFlowerClick] = useState(0);
 
-  const { addOneToCart, items, saveCartToSessionStorage } =
+  const { addToCart, items, saveCartToSessionStorage } =
     useContext(CartContext);
 
   useEffect(() => {
@@ -50,7 +40,7 @@ function WeedPrices() {
     evt.preventDefault();
     const selectedFlower = cartUtils.getFlowerInfo(evt);
 
-    addOneToCart(selectedFlower);
+    addToCart(selectedFlower);
     setFlowerClick((prev) => prev + 1);
   };
 

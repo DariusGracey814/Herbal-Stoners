@@ -1,13 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../../context/cart-context";
 import Container from "../../UI/Container/Container";
 import CartItems from "../CartItems";
 import classes from "./Checkout.module.css";
 
 function Checkout() {
-  const { getCartTotal } = useContext(CartContext);
+  const { getCartTotal, itemCounter } = useContext(CartContext);
   let tax = getCartTotal() * 0.1025;
   let orderTotal = tax + getCartTotal();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // When cart is empty redirect to menu
+    if (itemCounter === 0) {
+      navigate("/menu");
+    }
+  }, [itemCounter]);
 
   return (
     <section className={classes["checkout-section"]}>

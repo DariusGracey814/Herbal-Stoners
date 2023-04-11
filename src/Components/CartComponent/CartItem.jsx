@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
+import CartUtils from "../../Utils/cartUtils";
 import { CartContext } from "../../context/cart-context";
 import { Card } from "react-bootstrap";
 
@@ -15,37 +16,43 @@ function CartItem({
   id,
   price,
 }) {
-  const { deleteFromCart } = useContext(CartContext);
+  const {
+    deleteFromCart,
+    items,
+    setCart,
+    addOneExistingItem,
+    deleteAllProducts,
+  } = useContext(CartContext);
+
+  const cartUtils = new CartUtils();
 
   const cartTitle = `${title} | ${breeder}`;
 
+  useEffect(() => {
+    setCart(items);
+  }, [items, setCart]);
+
   const deleteHandler = (evt) => {
-    const itemName =
-      evt.target.parentNode.parentNode.parentNode.childNodes[0].innerText.split(
-        " |"
-      )[0];
-
-    const breeder =
-      evt.target.parentNode.parentNode.parentNode.childNodes[1].innerText;
-
-    const weight =
-      evt.target.parentNode.parentNode.parentNode.childNodes[3].childNodes[0]
-        .innerText;
-
-    const price =
-      evt.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].childNodes[4].innerText.replace(
-        "$",
-        ""
-      );
-
-    const selectedItem = {
-      name: itemName,
-      breeder: breeder,
-      weight: weight,
-      price: price,
-    };
-
+    const selectedItem = cartUtils.deleteItemInfo(evt);
     deleteFromCart(selectedItem);
+  };
+
+  const increaseCartHandler = (evt) => {
+    const selectedItem = cartUtils.deleteItemInfo(evt);
+    addOneExistingItem(selectedItem);
+  };
+
+  const deleteAll = (evt) => {
+    const id = evt.currentTarget.parentNode.parentNode.id;
+    const weight =
+      evt.currentTarget.parentNode.childNodes[0].childNodes[1].childNodes[3]
+        .childNodes[0].innerText;
+
+    const name =
+      evt.currentTarget.parentNode.childNodes[0].childNodes[1].childNodes[0].innerText.split(
+        " | "
+      )[0];
+    deleteAllProducts({ id: +id, weight: weight, name: name });
   };
 
   return (
@@ -54,9 +61,9 @@ function CartItem({
         <div className={classes["wrapper-img"]}>
           <img
             src={`${imageSrc ? imageSrc : img}`}
-            alt="product image"
             width="75px"
             height="75px"
+            alt="herbal stoners product item"
           />
           <div>
             <Card.Title className={classes["card-title"]}>
@@ -84,6 +91,7 @@ function CartItem({
                   className={classes["cart-update-btn"]}
                   type="button"
                   aria-label="add 1 item"
+                  onClick={increaseCartHandler}
                 >
                   +
                 </button>
@@ -96,7 +104,7 @@ function CartItem({
             </div>
           </div>
         </div>
-        <button className={classes.cartBtn} type="button">
+        <button className={classes.cartBtn} type="button" onClick={deleteAll}>
           <i className="fa-solid fa-trash"></i>
         </button>
       </Card.Body>

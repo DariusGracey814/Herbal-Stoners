@@ -11,6 +11,7 @@ import classes from "./MenuNavigation.module.css";
 function MenuNavigation() {
   const [menuActive, setMenuActive] = useState(false);
   const [show, setShow] = useState(false);
+  const [disabledBtn, setDisabledBtn] = useState(true);
 
   const { currentCart, getCartTotal, itemCounter } = useContext(CartContext);
 
@@ -20,8 +21,10 @@ function MenuNavigation() {
 
   // Hide cart Modal
   const handleClose = () => {
+    itemCounter >= 1 ? setDisabledBtn(false) : setDisabledBtn(true);
     setShow(false);
   };
+
   // Show cart Model
   const handleShow = () => {
     setShow(true);
@@ -106,7 +109,9 @@ function MenuNavigation() {
               Herbal Stoners Order{" "}
               <Link
                 className={classes["checkout-btn"]}
-                to="/herbal-stoners/checkout"
+                to={`${
+                  itemCounter >= 1 ? "/herbal-stoners/checkout" : "/menu"
+                }`}
               >
                 Proceed to Checkout
               </Link>

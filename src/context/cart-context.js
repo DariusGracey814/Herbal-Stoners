@@ -1,15 +1,18 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 
 export const CartContext = createContext({
   items: [],
   currentCart: [],
   itemCounter: 0,
   getProductQuantity: () => {},
-  addOneToCart: () => {},
+  addToCart: () => {},
   removeOneFromCart: () => {},
   deleteFromCart: () => {},
   getCartTotal: () => {},
   saveCartToSessionStorage: () => {},
+  setCart: () => {},
+  addOneExistingItem: () => {},
+  deleteAllProducts: () => {},
 });
 
 function CartProvider({ children }) {
@@ -39,7 +42,7 @@ function CartProvider({ children }) {
   }
 
   // Add one to cart
-  function addOneToCart(selectedItem) {
+  function addToCart(selectedItem) {
     // Get existing item quantity by item - id
     const quantity = getProductQuantity(selectedItem.id);
     setCartCounter(productCountTracker);
@@ -84,6 +87,38 @@ function CartProvider({ children }) {
     }
   }
 
+  // Add one item to existing cart item
+  function addOneExistingItem(selectedItem) {
+    const quantity = getProductQuantity(selectedItem.id);
+
+    const matchProduct = cartProducts.findIndex(
+      (product) =>
+        product.id === selectedItem.id &&
+        product.name === selectedItem.name &&
+        product.weight === selectedItem.weight
+    );
+
+    if (matchProduct !== -1) {
+      const existingItem = cartProducts[matchProduct];
+      const itemPrice =
+        selectedItem.price / cartProducts[matchProduct].quantity;
+
+      const updatedItem = {
+        ...existingItem,
+        quantity: existingItem.quantity + 1,
+        price: selectedItem.price + itemPrice,
+      };
+
+      cartProducts[matchProduct] = { ...updatedItem };
+      sessionStorage.setItem(
+        "userCart",
+        JSON.stringify({ cart: cartProducts })
+      );
+      setProductCountTracker((prevCount) => prevCount + 1);
+      console.log("Quantity and price updated");
+    }
+  }
+
   // Remove one from cart
   function removeOneFromCart(id) {
     // get matching product quantity
@@ -114,18 +149,68 @@ function CartProvider({ children }) {
         product.weight === selectedItem.weight
     );
 
-    console.log(matchProduct);
-
-    if (matchProduct != -1) {
+    if (matchProduct !== -1) {
       // Filter array
+      const itemPrice =
+        selectedItem.price / cartProducts[matchProduct].quantity;
+
       const existingItem = {
         ...cartProducts[matchProduct],
-        price: (cartProducts[matchProduct].quantity - 1) * selectedItem.price,
+        price: cartProducts[matchProduct].price - itemPrice,
         quantity: cartProducts[matchProduct].quantity - 1,
       };
-    }
 
-    // decrease quantity
+      if (cartProducts[matchProduct].quantity > 1) {
+        console.log("More than 1 item");
+        // Update cart Product
+        cartProducts[matchProduct] = { ...existingItem };
+        sessionStorage.setItem(
+          "userCart",
+          JSON.stringify({ cart: cartProducts })
+        );
+        setProductCountTracker((prevCount) => prevCount - 1);
+        sessionStorage.setItem("CartCounter", productCountTracker - 1);
+
+        // Condition 2
+      } else if (cartProducts[matchProduct].quantity === 1) {
+        const result2 = cartProducts.filter(
+          (product) =>
+            product.id !== selectedItem.id ||
+            product.name !== selectedItem.name ||
+            product.weight !== selectedItem.weight
+        );
+
+        setProductCountTracker((prevCount) => prevCount - 1);
+        sessionStorage.setItem("CartCounter", productCountTracker - 1);
+        setCartProducts(result2);
+      }
+    }
+  }
+
+  // Delete all of product
+  function deleteAllProducts(selectedItem) {
+    const foundProduct = cartProducts.findIndex(
+      (product) =>
+        product.id === selectedItem.id && product.weight === selectedItem.weight
+    );
+
+    if (foundProduct !== -1) {
+      let cart = cartProducts.filter(
+        (product) =>
+          product.id !== selectedItem.id ||
+          product.name !== selectedItem.name ||
+          product.weight !== selectedItem.weight
+      );
+
+      setCartProducts(cart);
+      setProductCountTracker(
+        (prevCount) => prevCount - cartProducts[foundProduct].quantity
+      );
+      sessionStorage.setItem(
+        "CartCounter",
+        productCountTracker - cartProducts[foundProduct].quantity
+      );
+    }
   }
 
   // Get Total Cost of the cart
@@ -153,6 +238,8 @@ function CartProvider({ children }) {
           // push last item in cart to currentCart
           currentCart.push(cart[cart.length - 1]);
         }
+
+        return currentCart;
       });
     }
     setCart(currentCart);
@@ -173,11 +260,14 @@ function CartProvider({ children }) {
     items: cartProducts,
     itemCounter: productCountTracker,
     getProductQuantity,
-    addOneToCart,
+    addToCart,
     removeOneFromCart,
     deleteFromCart,
     getCartTotal,
     saveCartToSessionStorage,
+    setCart,
+    addOneExistingItem,
+    deleteAllProducts,
   };
 
   // return context.provider and initial state

@@ -72,6 +72,40 @@ class CartUtils {
 
     return item;
   }
+
+  deleteItemInfo(evt) {
+    const id =
+      evt.target.parentNode.parentNode.parentNode.parentNode.parentNode
+        .parentNode.id;
+
+    const itemName =
+      evt.target.parentNode.parentNode.parentNode.childNodes[0].innerText.split(
+        " |"
+      )[0];
+
+    const breeder =
+      evt.target.parentNode.parentNode.parentNode.childNodes[1].innerText;
+
+    const weight =
+      evt.target.parentNode.parentNode.parentNode.childNodes[3].childNodes[0]
+        .innerText;
+
+    const price =
+      evt.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].childNodes[4].innerText.replace(
+        "$",
+        ""
+      );
+
+    const selectedItem = {
+      id: +id,
+      name: itemName,
+      breeder: breeder,
+      weight: weight,
+      price: +price,
+    };
+
+    return selectedItem;
+  }
 }
 
 export default CartUtils;

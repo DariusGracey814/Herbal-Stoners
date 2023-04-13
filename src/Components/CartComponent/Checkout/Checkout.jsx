@@ -19,6 +19,13 @@ function Checkout() {
     }
   }, [itemCounter]);
 
+  // Purchase items handler
+  const purchaseItemsHandler = (evt) => {
+    evt.preventDefault();
+
+    console.log("Purchase");
+  };
+
   return (
     <section className={classes["checkout-section"]}>
       <Container>
@@ -56,7 +63,10 @@ function Checkout() {
                 Order Total: <span>${orderTotal.toFixed(2)}</span>
               </p>
 
-              <button className={classes["orderSubmit-btn"]}>
+              <button
+                className={classes["orderSubmit-btn"]}
+                onClick={purchaseItemsHandler}
+              >
                 Place Order
               </button>
 

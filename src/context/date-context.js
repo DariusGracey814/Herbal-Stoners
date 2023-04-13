@@ -71,6 +71,8 @@ export function HerbalContextProvider({ children }) {
     } else {
       setOpen(false);
     }
+
+    setOpen(true);
   }
 
   return (

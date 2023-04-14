@@ -24,7 +24,7 @@ export const extractFormat = [
     price: 15,
   },
   {
-    imgNum: 6,
+    imgNum: 8,
     breeder: "Kola Farms",
     thc: "THC: 91.08%",
     type: "Indica",
@@ -34,7 +34,7 @@ export const extractFormat = [
   {
     imgNum: 4,
     breeder: "Kola Farms",
-    thc: "HC: 90.41%",
+    thc: "THC: 90.41%",
     type: "Sativa",
     cdb: "0.06%",
     price: 30,
@@ -44,7 +44,7 @@ export const extractFormat = [
   {
     imgNum: 5,
     breeder: "Bossy",
-    thc: "HC: 83.41%",
+    thc: "THC: 83.41%",
     cdb: "",
     type: "Indica",
     price: 15,
@@ -52,7 +52,7 @@ export const extractFormat = [
   {
     imgNum: 5,
     breeder: "Bossy",
-    thc: "HC: 89.41%",
+    thc: "THC: 89.41%",
     type: "Indica",
     cdb: "",
     price: 20,
@@ -116,8 +116,8 @@ export const extractFormat = [
     price: 20,
   },
   {
-    imgNum: 3,
-    breeder: "Motor City Cannacarts",
+    imgNum: 10,
+    breeder: "Five Start Extracts",
     thc: "THC: 85.08%",
     type: "Hybrid",
     cdb: "",

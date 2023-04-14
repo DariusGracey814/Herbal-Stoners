@@ -13,7 +13,12 @@ export function SinglePrices({ price }) {
     evt.preventDefault();
 
     const selectedItem = cartUtils.getSingleItems(evt);
-    addToCart(selectedItem);
+
+    // Match item with product in stripe
+    const stripeFormattedProduct =
+      cartUtils.matchItemWithStipeDataExtract(selectedItem);
+    // Add updated item to the cart
+    addToCart(stripeFormattedProduct);
   };
 
   return (

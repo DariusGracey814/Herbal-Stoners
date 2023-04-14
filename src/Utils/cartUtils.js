@@ -1,10 +1,11 @@
 import stripeFlowerData from "../json/flower.json";
+import stripeExtractData from "../json/extracts.json";
 
 class CartUtils {
   constructor() {}
 
   // Matches selected user item with stripe product item -> adds stripe price
-  matchItemWithStipeData(selectedItem) {
+  matchItemWithStipeDataFlower(selectedItem) {
     let stripeReadyItem = {};
 
     for (let i = 0; i < stripeFlowerData.length; i++) {
@@ -28,6 +29,24 @@ class CartUtils {
     }
 
     return stripeReadyItem;
+  }
+
+  // Matches selected extract item with stipe product data
+  matchItemWithStipeDataExtract(selectedItem) {
+    let formattedStripeProduct = {};
+
+    for (let i = 0; i < stripeExtractData.length; i++) {
+      if (
+        selectedItem.name.toLowerCase() ===
+        stripeExtractData[i].name.toLowerCase()
+      ) {
+        formattedStripeProduct = {
+          stripePrice: stripeExtractData[i].price,
+          ...selectedItem,
+        };
+      }
+    }
+    return formattedStripeProduct;
   }
 
   // Retrieve Flower information
@@ -65,7 +84,7 @@ class CartUtils {
       quantity: 1,
     };
 
-    const stripeMatch = this.matchItemWithStipeData(order);
+    const stripeMatch = this.matchItemWithStipeDataFlower(order);
 
     return stripeMatch;
   }

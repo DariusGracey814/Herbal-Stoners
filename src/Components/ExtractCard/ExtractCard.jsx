@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Suspense } from "react";
-import uuid from "react-uuid";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import ReactPaginate from "react-paginate";
@@ -7,7 +6,6 @@ import ReactPaginate from "react-paginate";
 import { getExtracts } from "../../api/api";
 import { LoadingSpinner3 } from "../LoadingSpinner/LoadingSpinner";
 import { SinglePrices } from "../WeedPrices/WeedPrices";
-import { displayImage, displayBreeder } from "./ExtractFunctionality";
 import classes from "./ExtractCard.module.css";
 
 // Images

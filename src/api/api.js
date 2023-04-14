@@ -1,4 +1,5 @@
 import { extractFormat } from "../Utils/extractFormat";
+import { edibleFormat } from "../Utils/edibleFormat";
 
 // Extracts
 export async function getExtracts() {
@@ -39,11 +40,22 @@ export async function getEdibles() {
       "https://api.otreeba.com/v1/edibles?count=15&sort=-createdAt"
     );
     const data = await response.json();
+
+    let updatedEdibles = [];
     let id = 1;
 
-    const updatedEdibles = data.data.map(
-      (edible) => (edible = { id: id++, ...edible })
-    );
+    for (let i = 0; i < data.data.length; i++) {
+      const edible = {
+        id: id++,
+        name: edibleFormat[i].name,
+        breeder: edibleFormat[i].breeder,
+        type: edibleFormat[i].type,
+        thc: edibleFormat[i].thc,
+        cbd: edibleFormat[i].cbd,
+      };
+
+      updatedEdibles.push(edible);
+    }
 
     return updatedEdibles;
   } catch (err) {

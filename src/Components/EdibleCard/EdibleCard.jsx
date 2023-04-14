@@ -77,7 +77,7 @@ function EdibleCard() {
 
               <p className={classes["strain-info"]}>
                 {/* type */}
-                <span className={classes.type}>Hybrid</span>
+                <span className={classes.type}>Hybrid &nbsp;</span>
                 {/* thc level */}
                 <div className={classes.levels}>
                   <span className={classes.thc}>{edible.thc}</span>

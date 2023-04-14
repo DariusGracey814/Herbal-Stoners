@@ -45,14 +45,14 @@
     "products": [
       {
         "strain": "Doctor Cookies",
-        "weight": "price_1MwEGrG6XH5BieNnfAYwEOnz",
-        "price": "id",
+        "weight": "1g",
+        "price": "price_1MwEGrG6XH5BieNnfAYwEOnz",
         "quantity": "0"
       },
       {
         "strain": "Doctor Cookies",
-        "weight": "price_1MwEI0G6XH5BieNnxLpYtpzr",
-        "price": "id",
+        "weight": "2g",
+        "price": "price_1MwEI0G6XH5BieNnxLpYtpzr",
         "quantity": "0"
       },
       {

@@ -2,6 +2,7 @@ import React, { useState, lazy } from "react";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { getWeedStrains } from "../../api/api";
 
 import strainData from "../../Utils/strains";
 import ReactPaginate from "react-paginate";
@@ -16,6 +17,7 @@ function FlowerCard() {
   const postPerPage = 10;
   const pagesVisited = pageNumber * postPerPage;
   const pageCount = Math.ceil(weedInfo.length / postPerPage);
+
   // Update current page number as it changes
   const pageChange = ({ selected }) => {
     setPageNumber(selected);

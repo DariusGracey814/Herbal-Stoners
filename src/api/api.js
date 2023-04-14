@@ -1,17 +1,3 @@
-// Weed Strains
-export async function getWeedStrains(evt) {
-  try {
-    const response = await fetch(
-      "https://herbal-stoners-default-rtdb.firebaseio.com/strains"
-    );
-    const data = await response.json();
-
-    return data;
-  } catch (error) {
-    return error.message;
-  }
-}
-
 // Extracts
 export async function getExtracts() {
   try {

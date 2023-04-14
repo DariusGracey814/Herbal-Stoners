@@ -1,5 +1,34 @@
+import stripeFlowerData from "../json/flower.json";
+
 class CartUtils {
   constructor() {}
+
+  // Matches selected user item with stripe product item -> adds stripe price
+  matchItemWithStipeData(selectedItem) {
+    let stripeReadyItem = {};
+
+    for (let i = 0; i < stripeFlowerData.length; i++) {
+      // console.log(stripeFlowerData[i].products);
+      if (
+        stripeFlowerData[i].name.toLowerCase() ===
+        selectedItem.name.toLowerCase()
+      ) {
+        // Loop throw nested stripe items and get price by weight
+        for (let j = 0; j < stripeFlowerData[i].products.length; j++) {
+          if (
+            stripeFlowerData[i].products[j].weight.toLowerCase() ===
+            selectedItem.weight.toLowerCase()
+          )
+            stripeReadyItem = {
+              stipePrice: stripeFlowerData[i].products[j].price,
+              ...selectedItem,
+            };
+        }
+      }
+    }
+
+    return stripeReadyItem;
+  }
 
   // Retrieve Flower information
   getFlowerInfo(evt) {
@@ -36,7 +65,9 @@ class CartUtils {
       quantity: 1,
     };
 
-    return order;
+    const stripeMatch = this.matchItemWithStipeData(order);
+
+    return stripeMatch;
   }
 
   // Retrieve Single Price items (edibles / Extracts / Vaporizers)

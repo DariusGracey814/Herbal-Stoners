@@ -6,11 +6,13 @@ import CartItems from "../CartItems";
 import classes from "./Checkout.module.css";
 
 function Checkout() {
-  const { getCartTotal, itemCounter } = useContext(CartContext);
+  const { getCartTotal, itemCounter, items } = useContext(CartContext);
   let tax = getCartTotal() * 0.1025;
   let orderTotal = tax + getCartTotal();
 
   const navigate = useNavigate();
+
+  console.log(items);
 
   useEffect(() => {
     // When cart is empty redirect to menu

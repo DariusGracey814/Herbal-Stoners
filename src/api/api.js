@@ -16,7 +16,7 @@ export async function getWeedStrains(evt) {
 export async function getExtracts() {
   try {
     const response = await fetch(
-      "https://api.otreeba.com/v1/extracts?count=25&sort=-createdAt"
+      "https://api.otreeba.com/v1/extracts?count=15&sort=-createdAt"
     );
     const data = await response.json();
     let id = 1;
@@ -35,7 +35,7 @@ export async function getExtracts() {
 export async function getEdibles() {
   try {
     const response = await fetch(
-      "https://api.otreeba.com/v1/edibles?count=25&sort=-createdAt"
+      "https://api.otreeba.com/v1/edibles?count=15&sort=-createdAt"
     );
     const data = await response.json();
     let id = 1;

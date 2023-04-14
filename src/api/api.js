@@ -1,3 +1,5 @@
+import { extractFormat } from "../Utils/extractFormat";
+
 // Extracts
 export async function getExtracts() {
   try {
@@ -7,9 +9,22 @@ export async function getExtracts() {
     const data = await response.json();
     let id = 1;
 
-    const updatedExtracts = data.data.map(
-      (extract) => (extract = { id: id++, ...extract })
-    );
+    let updatedExtracts = [];
+
+    for (let i = 0; i < data.data.length; i++) {
+      const extract = {
+        id: id++,
+        imgNum: extractFormat[i].imgNum,
+        name: data.data[i].name,
+        breeder: extractFormat[i].breeder,
+        type: extractFormat[i].type,
+        thc: extractFormat[i].thc,
+        cbd: extractFormat[i].cbd,
+        price: extractFormat[i].price,
+      };
+
+      updatedExtracts.push(extract);
+    }
 
     return updatedExtracts;
   } catch (err) {

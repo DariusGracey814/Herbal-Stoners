@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CartProvider from "./context/cart-context";
+import SortCartProvider from "./context/sort-context";
 
 import LoadingSpinner from "./Components/LoadingSpinner/LoadingSpinner";
 // Pages
@@ -108,7 +109,9 @@ function App() {
                   path="/menu/flower"
                   element={
                     <CartProvider>
-                      <Flower />
+                      <SortCartProvider>
+                        <Flower />
+                      </SortCartProvider>
                     </CartProvider>
                   }
                 />

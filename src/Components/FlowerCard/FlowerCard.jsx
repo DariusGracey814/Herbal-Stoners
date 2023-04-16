@@ -1,8 +1,8 @@
-import React, { useState, lazy } from "react";
+import React, { useState, lazy, useContext, useEffect } from "react";
+import { SortContext } from "../../context/sort-context";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import { getWeedStrains } from "../../api/api";
 
 import strainData from "../../Utils/strains";
 import ReactPaginate from "react-paginate";
@@ -10,10 +10,12 @@ import classes from "./FlowerCard.module.css";
 
 const WeedPrices = lazy(() => import("../WeedPrices/WeedPrices"));
 
-function FlowerCard() {
-  const [weedInfo, setWeedInfo] = useState(strainData);
-  const [pageNumber, setPageNumber] = useState(0);
+// Sorted strain data
 
+function FlowerCard() {
+  const [pageNumber, setPageNumber] = useState(0);
+  const { sort, setSortProducts } = useContext(SortContext);
+  const [weedInfo, setWeedInfo] = useState(strainData);
   const postPerPage = 10;
   const pagesVisited = pageNumber * postPerPage;
   const pageCount = Math.ceil(weedInfo.length / postPerPage);
@@ -22,6 +24,18 @@ function FlowerCard() {
   const pageChange = ({ selected }) => {
     setPageNumber(selected);
   };
+
+  useEffect(() => {
+    if (!sort) {
+      const defaultStrains = [...strainData.slice()];
+      setWeedInfo(defaultStrains);
+    } else {
+      const sorted = strainData.slice().sort((a, b) => {
+        return a.name[0] > b.name[0] ? 1 : a.name[0] < b.name[0] - 1;
+      });
+      setWeedInfo((strainData) => [...sorted]);
+    }
+  }, [setSortProducts]);
 
   // Creating Pagination of all strains
   const displayStrains = weedInfo

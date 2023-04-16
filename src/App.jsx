@@ -131,7 +131,9 @@ function App() {
                   path="/menu/edibles"
                   element={
                     <CartProvider>
-                      <Edibles />
+                      <SortCartProvider>
+                        <Edibles />
+                      </SortCartProvider>
                     </CartProvider>
                   }
                 />

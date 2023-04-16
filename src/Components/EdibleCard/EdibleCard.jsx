@@ -1,4 +1,5 @@
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect, Suspense, useContext } from "react";
+import { SortContext } from "../../context/sort-context";
 import ReactPaginate from "react-paginate";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -12,8 +13,11 @@ import edibleImg from "../../Assets/Edibles/edible-img.jpg";
 
 function EdibleCard() {
   const [edibleInfo, setEdibleInfo] = useState([]);
+  const [defaultProducts, setDefaultProducts] = useState([]);
   const [load, setLoad] = useState(true);
   const [pageNumber, setPageNumber] = useState(0);
+
+  const { sort, setSortProducts } = useContext(SortContext);
 
   // on page change
   const pageChange = ({ selected }) => {
@@ -25,6 +29,7 @@ function EdibleCard() {
       try {
         const results = await getEdibles();
         setEdibleInfo(results);
+        setDefaultProducts(results);
         setLoad(false);
       } catch (err) {
         return err.message;
@@ -33,6 +38,18 @@ function EdibleCard() {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (sort) {
+      setEdibleInfo(
+        edibleInfo.slice().sort((a, b) => {
+          return a.name[0] > b.name[0] ? 1 : a.name[0] < b.name[0] - 1;
+        })
+      );
+    } else {
+      setEdibleInfo(defaultProducts);
+    }
+  }, [sort, setSortProducts]);
 
   const postPerPage = 10;
   const pagesVisited = pageNumber * postPerPage;

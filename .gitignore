@@ -12,6 +12,7 @@
 /build
 /server
 /json
+/client/build
 
 # misc
 .DS_Store

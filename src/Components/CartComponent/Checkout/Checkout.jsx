@@ -7,12 +7,10 @@ import classes from "./Checkout.module.css";
 
 function Checkout() {
   const { getCartTotal, itemCounter, items } = useContext(CartContext);
-  let tax = getCartTotal() * 0.1025;
+  let tax = getCartTotal() * 0.06;
   let orderTotal = tax + getCartTotal();
 
   const navigate = useNavigate();
-
-  console.log(items);
 
   useEffect(() => {
     // When cart is empty redirect to menu
@@ -22,10 +20,25 @@ function Checkout() {
   }, [itemCounter]);
 
   // Purchase items handler
-  const purchaseItemsHandler = (evt) => {
-    evt.preventDefault();
+  const checkoutHandler = async () => {
+    try {
+      console.log(items);
+      const res = await fetch("http://localhost:4000/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ customerCart: items }),
+      });
 
-    console.log("Purchase");
+      const data = await res.json();
+
+      if (data.url) {
+        window.location.assign(data.url);
+      }
+    } catch (error) {
+      return error.message;
+    }
   };
 
   return (
@@ -66,8 +79,9 @@ function Checkout() {
               </p>
 
               <button
+                type="submit"
                 className={classes["orderSubmit-btn"]}
-                onClick={purchaseItemsHandler}
+                onClick={checkoutHandler}
               >
                 Place Order
               </button>

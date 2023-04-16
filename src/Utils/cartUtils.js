@@ -21,7 +21,7 @@ class CartUtils {
             selectedItem.weight.toLowerCase()
           )
             stripeReadyItem = {
-              stipePrice: stripeFlowerData[i].products[j].price,
+              stripePrice: stripeFlowerData[i].products[j].price,
               ...selectedItem,
             };
         }

@@ -12,6 +12,7 @@ import LoadingSpinner from "./Components/LoadingSpinner/LoadingSpinner";
 // Pages
 import Header from "./Components/Header/Header";
 import "./App.css";
+import Success from "./Components/CartComponent/Checkout/Success";
 
 // Lazy Load Page Components
 const Home = lazy(() => import("./Pages/Home"));
@@ -138,6 +139,12 @@ function App() {
                       <Checkout />
                     </CartProvider>
                   }
+                />
+
+                <Route
+                  exact
+                  path="/herbal-stoners/purchase-successful"
+                  element={<Success />}
                 />
                 {/* Any other route return an error */}
                 <Route path="*" element={<Error404 />} />

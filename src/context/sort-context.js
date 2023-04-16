@@ -6,15 +6,16 @@ export const SortContext = createContext({
 });
 
 function SortCartProvider({ children }) {
-  const [sort, setSort] = useState(false);
+  const [sortOption, setSortOption] = useState(false);
 
   // Set sort products state
   function setSortProducts(state) {
-    setSort(state);
+    console.log("Sort state: ", state);
+    state ? setSortOption(true) : setSortOption(false);
   }
 
   const sortItems = {
-    sort: sort,
+    sort: sortOption,
     setSortProducts,
   };
 

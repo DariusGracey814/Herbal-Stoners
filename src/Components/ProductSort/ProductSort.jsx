@@ -3,18 +3,17 @@ import { SortContext } from "../../context/sort-context";
 import { Form } from "react-bootstrap";
 
 function ProductSort(props) {
-  const { setSortProducts } = useContext(SortContext);
+  const { setSortProducts, sort } = useContext(SortContext);
 
   const sortHandler = (evt) => {
     const sortPreference = evt.target.value;
 
-    if (
-      sortPreference.toLowerCase() === "no sort" ||
-      sortPreference.toLowerCase() === "sort by"
-    ) {
+    if (sortPreference.toLowerCase() === "no sort") {
       setSortProducts(false);
-    } else {
+    } else if (sortPreference.toLowerCase() === "product name") {
       setSortProducts(true);
+    } else {
+      return "Invalid sort option";
     }
   };
 
@@ -24,9 +23,8 @@ function ProductSort(props) {
       aria-label="Default select example"
       onClick={sortHandler}
     >
-      <option>Sort By</option>
       <option value="No sort">No Sort</option>
-      <option value="Name: Product Name">Product Name</option>
+      <option value="Product Name">Product Name</option>
     </Form.Select>
   );
 }

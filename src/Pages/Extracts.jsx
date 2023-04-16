@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
 import { Form } from "react-bootstrap";
 
-import LoadingSpinner from "../Components/LoadingSpinner/LoadingSpinner";
+import ProductSort from "../Components/ProductSort/ProductSort";
 import { LoadingSpinner3 } from "../Components/LoadingSpinner/LoadingSpinner";
 import { Directory3 } from "../Components/UI/Directory/Directory";
 import Container from "../Components/UI/Container/Container";
@@ -32,16 +32,7 @@ function Extracts() {
       <Container>
         <div className={classes.sort}>
           <h1>All Extracts</h1>
-          <Form.Select
-            className={classes.select}
-            aria-label="Default select example"
-          >
-            <option>Sort By</option>
-            <option value="1">Price: Low to High</option>
-            <option value="2">Price: High to Low</option>
-            <option value="3">Potency: Low to High</option>
-            <option value="3">Potency: High to Low</option>
-          </Form.Select>
+          <ProductSort class={classes.select} />
         </div>
 
         <ExtractCard />

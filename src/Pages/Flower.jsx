@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy, useContext } from "react";
+import React, { useState, useEffect, Suspense, lazy } from "react";
 import { SortContext } from "../context/sort-context";
 import Container from "../Components/UI/Container/Container";
 import LoadingSpinner, {
@@ -15,7 +15,6 @@ const FlowerCard = lazy(() => import("../Components/FlowerCard/FlowerCard"));
 
 function Flower() {
   const [load, setLoad] = useState(true);
-  const { sort } = useContext(SortContext);
 
   useEffect(() => {
     setTimeout(() => {

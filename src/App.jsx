@@ -120,7 +120,9 @@ function App() {
                   path="/menu/extracts"
                   element={
                     <CartProvider>
-                      <Extracts />
+                      <SortCartProvider>
+                        <Extracts />
+                      </SortCartProvider>
                     </CartProvider>
                   }
                 />

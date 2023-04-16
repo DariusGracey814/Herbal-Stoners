@@ -1,4 +1,5 @@
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { SortContext } from "../../context/sort-context";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import ReactPaginate from "react-paginate";
@@ -22,18 +23,35 @@ import wax3 from "../../Assets/Extracts/wax3.jpg";
 import wax4 from "../../Assets/Extracts/wax4.jpg";
 
 function ExtractCard() {
+  const [defaultProducts, setDefaultProducts] = useState([]);
   const [extractInfo, setExtractInfo] = useState([]);
+  const [sortedProducts, setSortedProducts] = useState([]);
   const [load, setLoad] = useState(true);
   const [pageNumber, setPageNumber] = useState(0);
+  const { setSortProducts, sort } = useContext(SortContext);
 
   useEffect(() => {
     async function extracts() {
       const results = await getExtracts();
+
       setExtractInfo(results);
+      setDefaultProducts(results);
       setLoad(false);
     }
     extracts();
   }, []);
+
+  useEffect(() => {
+    if (sort) {
+      setExtractInfo(
+        extractInfo.slice().sort((a, b) => {
+          return a.name[0] > b.name[0] ? 1 : a.name[0] < b.name[0] - 1;
+        })
+      );
+    } else {
+      setExtractInfo(defaultProducts);
+    }
+  }, [sort, setSortProducts]);
 
   // Pagination
   const postPerPage = 10;

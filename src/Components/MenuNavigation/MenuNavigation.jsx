@@ -113,7 +113,7 @@ function MenuNavigation() {
                   itemCounter >= 1 ? "/herbal-stoners/checkout" : "/menu"
                 }`}
               >
-                Proceed to Checkout
+                Checkout
               </Link>
             </h1>
             <CartItems currentCart={currentCart} />
